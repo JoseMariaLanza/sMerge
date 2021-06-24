@@ -7,14 +7,8 @@ function substrCount(n, s) {
     const splitted = lowered.split('')
     // Obtener combinaciones
     const comb = combinations(splitted)
-    // Unir las combinaciones en strings separados
-    const strings = []
-    comb.forEach(element => {
-        strings.push(element.join(''))
-    });
-    // Obtener Special Strings
-    console.log(strings)
-    const spStr = specialStrings(strings)
+    // Obtener Strings especiales
+    const spStr = specialStrings(comb)
     console.log(spStr)
     console.log(spStr.length)
     return spStr.length
@@ -29,7 +23,8 @@ const specialStrings = (strs) => {
             specialStr.push(s)
         }
         // 2. Hasta 3 letras, que la letra del medio sea y que sea palíndromo
-        if (s.length == 3 && isPalindrome(s)) {
+        // if (s.length == 3 && isPalindrome(s)) {
+        if (s.length == 3 && isPalindrome(s) || s.length == 2 && isPalindrome(s)) {
             specialStr.push(s)
         }
     });
@@ -43,47 +38,31 @@ const isPalindrome = (str) => {
     return str == joined
 }
 
-// Potencia de un conjunto
 const combinations = (arr) => {
     let comb = arr
     let fragment = []
     for (let i = 0; i < arr.length; i++) {
         // en i tomo 3 y luego avanza 1, el proceso se repite hasta
         // que no se puedan tomar 3 números
-        if ((i + 3) <= (arr.length - 1)) {
-            // fragment.push(arr.slice(i, i + 3))
-            // let joined = []
-            // joined.push(fragment[i].join(''))
-            // // console.log(fragment[i].join(''))
-            // console.log(joined)
-
+        if ((i + 2) <= (arr.length - 1)) {
             fragment.push(arr.slice(i, i + 3).join(''))
-            console.log(fragment)
 
-            if ((i + 3) >= (arr.length - 1)) {
-                // Uno los arreglos y los inserto en el comb
-                // comb.push(joined)
-                comb.push(fragment)
-                break
+        } else if((i + 1 <= (arr.length - 1))) {
+            if (arr[i] == arr[i+1]) {
+                fragment.push(arr.slice(i, i + 2).join(''))
             }
         }
+
+        if ((i + 1) >= (arr.length - 1)) {
+            comb.push(fragment)
+            break
+        }
     }
-    // comb.push(fragment)
-    console.log(comb)
-
-    // console.log(comb)
-    // return comb
-
-
-    // arr.forEach(element => {
-    //     console.log()
-    //     // console.log(arr.slice(arr.indexOf(element), 3))
-    // });
-    // return arr.reduce((acc, el) => {
-    //     console.log(acc[el])
-    //     // console.log(acc.slice(acc[el], 3))
-    // })
-    // return arr.reduce((acc, el) => acc.concat(acc.map(s => [el].concat(s))), [[]])
+    const combinationsFlatted = flat(comb)
+    console.log(combinationsFlatted)
+    return combinationsFlatted
 }
 
-substrCount(5, 'asasd')
+const flat = (arr) => arr.reduce((acc, el) => acc.concat(el), [])
+
+substrCount(5, 'mnonopoo')

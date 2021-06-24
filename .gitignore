@@ -74,3 +74,11 @@ yarn-error.log
 
 # Build
 dist/
+
+# Practice Codes
+Fibonacci.jsx
+FizzBuzz.js
+InterviewBasicChallenges.js
+Number.jsx
+sockMerchant.js
+SpecialString.js
